@@ -134,8 +134,8 @@ void st7789_init(const struct st7789_config* config, uint16_t width, uint16_t he
     // - Display Data Latch Data Order = LCD Refresh Left to Right
     st7789_cmd(0x36, (uint8_t[]){ 0x00 }, 1);
    
-    st7789_caset(0, width);
-    st7789_raset(0, height);
+    st7789_caset(0, width - 1);
+    st7789_raset(0, height - 1);
 
     // INVON (21h): Display Inversion On
     st7789_cmd(0x21, NULL, 0);
@@ -208,8 +208,8 @@ void st7789_fill(uint16_t pixel)
 
 void st7789_set_cursor(uint16_t x, uint16_t y)
 {
-    st7789_caset(x, st7789_width);
-    st7789_raset(y, st7789_height);
+    st7789_caset(x, st7789_width - 1);
+    st7789_raset(y, st7789_height - 1);
 }
 
 void st7789_vertical_scroll(uint16_t row)
