@@ -10,6 +10,11 @@
 
 #include "hardware/spi.h"
 
+enum st7789_rotation {
+    ST7789_PORTRAIT = 0,
+    ST7789_LANDSCAPE = 1,
+};
+
 struct st7789_config {
     spi_inst_t* spi;
     uint gpio_din;
@@ -20,7 +25,7 @@ struct st7789_config {
     uint gpio_bl;
 };
 
-void st7789_init(const struct st7789_config* config, uint16_t width, uint16_t height);
+void st7789_init(const struct st7789_config* config, uint16_t width, uint16_t height, enum st7789_rotation rotation);
 void st7789_write(const void* data, size_t len);
 void st7789_set_window(uint16_t xs, uint16_t xe, uint16_t ys, uint16_t ye);
 void st7789_vertical_scroll(uint16_t row);

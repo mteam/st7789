@@ -9,6 +9,8 @@
 #include "pico/stdlib.h"
 #include "pico/st7789.h"
 
+const uint8_t madctl_rotation[] = {0x00, 0x60};
+
 static struct st7789_config st7789_cfg;
 static uint16_t st7789_width;
 static uint16_t st7789_height;
@@ -74,7 +76,7 @@ void st7789_raset(uint16_t ys, uint16_t ye)
     st7789_cmd(0x2b, data, sizeof(data));
 }
 
-void st7789_init(const struct st7789_config* config, uint16_t width, uint16_t height)
+void st7789_init(const struct st7789_config* config, uint16_t width, uint16_t height, enum st7789_rotation rotation)
 {
     memcpy(&st7789_cfg, config, sizeof(st7789_cfg));
     st7789_width = width;
@@ -126,13 +128,7 @@ void st7789_init(const struct st7789_config* config, uint16_t width, uint16_t he
     sleep_ms(10);
 
     // MADCTL (36h): Memory Data Access Control
-    // - Page Address Order            = Top to Bottom
-    // - Column Address Order          = Left to Right
-    // - Page/Column Order             = Normal Mode
-    // - Line Address Order            = LCD Refresh Top to Bottom
-    // - RGB/BGR Order                 = RGB
-    // - Display Data Latch Data Order = LCD Refresh Left to Right
-    st7789_cmd(0x36, (uint8_t[]){ 0x00 }, 1);
+    st7789_cmd(0x36, (uint8_t[]){ madctl_rotation[rotation] }, 1);
    
     st7789_caset(0, width - 1);
     st7789_raset(0, height - 1);
