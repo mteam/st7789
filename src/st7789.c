@@ -190,26 +190,10 @@ void st7789_write(const void* data, size_t len)
     spi_write16_blocking(st7789_cfg.spi, data, len / 2);
 }
 
-void st7789_put(uint16_t pixel)
+void st7789_set_window(uint16_t xs, uint16_t xe, uint16_t ys, uint16_t ye)
 {
-    st7789_write(&pixel, sizeof(pixel));
-}
-
-void st7789_fill(uint16_t pixel)
-{
-    int num_pixels = st7789_width * st7789_height;
-
-    st7789_set_cursor(0, 0);
-
-    for (int i = 0; i < num_pixels; i++) {
-        st7789_put(pixel);
-    }
-}
-
-void st7789_set_cursor(uint16_t x, uint16_t y)
-{
-    st7789_caset(x, st7789_width - 1);
-    st7789_raset(y, st7789_height - 1);
+    st7789_caset(xs, xe);
+    st7789_raset(ys, ye);
 }
 
 void st7789_vertical_scroll(uint16_t row)
