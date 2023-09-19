@@ -10,6 +10,10 @@
 
 #include "hardware/spi.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum st7789_rotation {
     ST7789_PORTRAIT = 0,
     ST7789_LANDSCAPE = 1,
@@ -30,4 +34,7 @@ void st7789_write(const void* data, size_t len);
 void st7789_set_window(uint16_t xs, uint16_t xe, uint16_t ys, uint16_t ye);
 void st7789_vertical_scroll(uint16_t row);
 
+#ifdef __cplusplus
+}
+#endif
 #endif
